@@ -1,0 +1,10 @@
+rootProject.name = "apolo"
+include("apolo-api")
+include("apolo-messaging")
+include("apolo-redis")
+include("apolo-database")
+include("apolo-core")
+include("apolo-economy")
+include("apolo-commands")
+include("apolo-listeners")
+include("apolo-plugin")
