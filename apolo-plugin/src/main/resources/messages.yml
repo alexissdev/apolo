@@ -1,0 +1,124 @@
+prefix: "&8[&bApolo&8] &r"
+
+general:
+  no-permission: "{prefix}&cNo tienes permiso para ejecutar este comando."
+  player-not-found: "{prefix}&cEl jugador &e{player} &cno fue encontrado."
+  only-players: "{prefix}&cEste comando solo puede ser ejecutado por jugadores."
+  player-offline: "{prefix}&cEl jugador &e{player} &cno está conectado."
+  invalid-arguments: "{prefix}&cArgumentos inválidos. Uso: &e{usage}"
+  cannot-target-self: "{prefix}&cNo puedes seleccionarte a ti mismo."
+
+gamemode:
+  changed-self: "{prefix}&7Modo de juego cambiado a &a{gamemode}&7."
+  changed-other-sender: "{prefix}&7Cambiaste el modo de juego de &e{player} &7a &a{gamemode}&7."
+  changed-other-target: "{prefix}&e{player} &7cambió tu modo de juego a &a{gamemode}&7."
+  no-permission-mode: "{prefix}&cNo tienes permiso para usar el modo &e{gamemode}&c."
+  invalid: "{prefix}&cModo de juego inválido: &e{input}&c."
+  usage: "{prefix}&cUso: &e/gamemode <survival|creative|adventure|spectator> [jugador]"
+
+tpa:
+  request-sent: "{prefix}&7Solicitud de TPA enviada a &e{player}&7."
+  request-received: "{prefix}&e{player} &7quiere teletransportarse contigo. &a[Aceptar] &c[Rechazar]"
+  already-pending: "{prefix}&cYa tienes una solicitud de TPA pendiente hacia &e{player}&c."
+  cooldown: "{prefix}&cDebes esperar &e{seconds}s &cantes de enviar otra solicitud."
+  accepted-sender: "{prefix}&a{player} &7aceptó tu solicitud de TPA."
+  accepted-target: "{prefix}&7Aceptaste la solicitud de TPA de &a{player}&7."
+  denied-sender: "{prefix}&c{player} &7rechazó tu solicitud de TPA."
+  denied-target: "{prefix}&7Rechazaste la solicitud de TPA de &c{player}&7."
+  expired-sender: "{prefix}&cTu solicitud de TPA a &e{player} &cexpiró."
+  expired-target: "{prefix}&cLa solicitud de TPA de &e{player} &cexpiró."
+  no-pending: "{prefix}&cNo tienes ninguna solicitud de TPA pendiente."
+  teleporting: "{prefix}&7Teletransportando..."
+  usage: "{prefix}&cUso: &e/tpa <jugador>"
+
+tphere:
+  request-sent: "{prefix}&7Invitaste a &e{player} &7a teletransportarse a tu ubicación."
+  request-received: "{prefix}&e{player} &7te invita a teletransportarte a su ubicación. &a[Aceptar] &c[Rechazar]"
+  accepted-sender: "{prefix}&a{player} &7aceptó tu invitación y se teletransportó a ti."
+  accepted-target: "{prefix}&7Aceptaste la invitación de &a{player} &7y te teletransportaste a él."
+  usage: "{prefix}&cUso: &e/tphere <jugador>"
+
+warp:
+  created: "{prefix}&7Warp &a{warp} &7creado correctamente."
+  deleted: "{prefix}&7Warp &c{warp} &7eliminado correctamente."
+  not-found: "{prefix}&cEl warp &e{warp} &cno existe."
+  already-exists: "{prefix}&cEl warp &e{warp} &cya existe."
+  teleporting: "{prefix}&7Teletransportando al warp &a{warp}&7..."
+  list:
+    header: "{prefix}&7&m----&r &bWarps &7(&e{page}&7/&e{total_pages}&7) &7&m----"
+    entry: "  &8• &a{warp} &7- &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    footer: "&7&m-------------------------------"
+    empty: "{prefix}&7No hay warps disponibles."
+  setwarp-usage: "{prefix}&cUso: &e/setwarp <nombre>"
+  delwarp-usage: "{prefix}&cUso: &e/delwarp <nombre>"
+  usage: "{prefix}&cUso: &e/warp <nombre>"
+
+fly:
+  enabled-self: "{prefix}&aEl vuelo ha sido &lactivado&r&a."
+  disabled-self: "{prefix}&cEl vuelo ha sido &ldesactivado&r&c."
+  enabled-other-sender: "{prefix}&aActivaste el vuelo de &e{player}&a."
+  disabled-other-sender: "{prefix}&cDesactivaste el vuelo de &e{player}&c."
+  enabled-other-target: "{prefix}&e{player} &aactivó tu vuelo."
+  disabled-other-target: "{prefix}&e{player} &cdesactivó tu vuelo."
+  usage: "{prefix}&cUso: &e/fly [jugador]"
+
+godmode:
+  enabled-self: "{prefix}&aEl modo dios ha sido &lactivado&r&a."
+  disabled-self: "{prefix}&cEl modo dios ha sido &ldesactivado&r&c."
+  enabled-other-sender: "{prefix}&aActivaste el modo dios de &e{player}&a."
+  disabled-other-sender: "{prefix}&cDesactivaste el modo dios de &e{player}&c."
+  enabled-other-target: "{prefix}&e{player} &aactivó tu modo dios."
+  disabled-other-target: "{prefix}&e{player} &cdesactivó tu modo dios."
+  usage: "{prefix}&cUso: &e/godmode [jugador]"
+
+repair:
+  success-hand: "{prefix}&a¡Item en mano reparado correctamente!"
+  success-armor: "{prefix}&a¡Armadura reparada correctamente!"
+  success-all: "{prefix}&a¡Item en mano y armadura reparados correctamente!"
+  nothing-to-repair: "{prefix}&7No tienes nada que reparar."
+  cooldown: "{prefix}&cDebes esperar &e{seconds}s &cpara volver a reparar."
+  usage: "{prefix}&cUso: &e/repair [hand|armor|all]"
+
+economy:
+  balance-self: "{prefix}&7Tu saldo actual: &a{currency}{balance}"
+  balance-other: "{prefix}&7Saldo de &e{player}&7: &a{currency}{balance}"
+  deposit-success: "{prefix}&a+{currency}{amount} &7depositado. Nuevo saldo: &a{currency}{balance}"
+  withdraw-success: "{prefix}&c-{currency}{amount} &7retirado. Nuevo saldo: &a{currency}{balance}"
+  transfer-sent: "{prefix}&7Transferiste &a{currency}{amount} &7a &e{player}&7. Nuevo saldo: &a{currency}{balance}"
+  transfer-received: "{prefix}&e{player} &7te transfirió &a{currency}{amount}&7. Nuevo saldo: &a{currency}{balance}"
+  insufficient-funds: "{prefix}&cFondos insuficientes. Tienes &e{currency}{balance} &cy necesitas &e{currency}{amount}&c."
+  invalid-amount: "{prefix}&cCantidad inválida: &e{input}&c. Debe ser un número positivo."
+  account-not-found: "{prefix}&cNo se encontró la cuenta de &e{player}&c."
+  account-created: "{prefix}&7Tu cuenta fue creada con saldo inicial de &a{currency}{initial}&7."
+  top-header: "{prefix}&7&m---&r &bTop {limit} &7Jugadores por Saldo &7&m---"
+  top-entry: "  &e#{position} &7{player}&8: &a{currency}{balance}"
+  top-footer: "&7&m-------------------------------"
+  set-balance-success: "{prefix}&7El saldo de &e{player} &7fue establecido en &a{currency}{amount}&7."
+  admin-deposit-success: "{prefix}&7Depositaste &a{currency}{amount} &7en la cuenta de &e{player}&7."
+  admin-withdraw-success: "{prefix}&7Retiraste &c{currency}{amount} &7de la cuenta de &e{player}&7."
+  transfer-usage: "{prefix}&cUso: &e/pay <jugador> <cantidad>"
+  balance-usage: "{prefix}&cUso: &e/balance [jugador]"
+
+user:
+  first-join: "{prefix}&a¡Bienvenido por primera vez, &e{player}&a! Tu cuenta ha sido creada."
+  welcome-back: "{prefix}&7¡Bienvenido de vuelta, &e{player}&7!"
+
+msg:
+  sent: "{prefix}&7[Tú → &e{player}&7]: &f{message}"
+  received: "{prefix}&7[&e{player} → Tú&7]: &f{message}"
+  player-not-online: "{prefix}&cEl jugador &e{player} &cno está conectado en ningún servidor."
+  usage: "{prefix}&cUso: &e/msg <jugador> <mensaje>"
+
+reply:
+  usage: "{prefix}&cUso: &e/reply <mensaje>"
+  no-one: "{prefix}&cNo tienes nadie a quien responder."
+
+socialspy:
+  enabled: "{prefix}&dSocialSpy &lactivado&r&d."
+  disabled: "{prefix}&7SocialSpy &ldesactivado&r&7."
+  format: "{prefix}&8[&dSpy&8] &7{from} &8→ &7{to}&8: &d{message}"
+
+commandspy:
+  enabled: "{prefix}&6CommandSpy &lactivado&r&6."
+  disabled: "{prefix}&7CommandSpy &ldesactivado&r&7."
+  format: "&8[&6{server}&8] &e{player} &7ejecutó el comando: &f{command}"

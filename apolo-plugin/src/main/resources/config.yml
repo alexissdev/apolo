@@ -1,0 +1,49 @@
+server-id: "lobby"
+
+redis:
+  host: "localhost"
+  port: 6379
+  password: ""
+  database: 0
+  pool:
+    max-total: 10
+    max-idle: 5
+    min-idle: 1
+
+mongodb:
+  uri: "mongodb://localhost:27017"
+  database: "apolo"
+  connection-timeout: 5000
+  socket-timeout: 10000
+  max-pool-size: 10
+
+tpa:
+  request-timeout: 30
+  cooldown: 10
+
+repair:
+  cooldown: 60
+
+fly:
+  restore-on-join: true
+
+godmode:
+  restore-on-join: true
+
+warps:
+  per-page: 6
+
+economy:
+  starting-balance: 500.0
+  currency-symbol: "$"
+  currency-name-singular: "Dólar"
+  currency-name-plural: "Dólares"
+  decimal-digits: 2
+  max-balance: 1000000000.0
+  min-transfer-amount: 1.0
+
+cache:
+  balance-ttl: 300
+  user-ttl: 600
+
+messages-file: "messages.yml"
