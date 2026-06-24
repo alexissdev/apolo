@@ -18,110 +18,100 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 @Slf4j
 public class MongoUserRepository implements IUserRepository {
     private final MongoCollection<Document> collection;
     private final UserDocumentMapper mapper;
-    private final Executor executor;
 
     public MongoUserRepository(MongoManager mongoManager) {
         this.collection = mongoManager.getCollection(CollectionNames.USERS);
         this.mapper = new UserDocumentMapper();
-        this.executor = Executors.newFixedThreadPool(4);
         createIndexes();
     }
 
     private void createIndexes() {
-        CompletableFuture.runAsync(() -> {
-            try {
-                collection.createIndex(Indexes.ascending("uuid"), new IndexOptions().unique(true));
-                collection.createIndex(Indexes.ascending("username"));
-                collection.createIndex(Indexes.descending("balance"));
-            } catch (Exception e) {
-                log.error("Error creating MongoDB indexes", e);
-            }
-        }, executor);
+        try {
+            collection.createIndex(Indexes.ascending("uuid"), new IndexOptions().unique(true));
+            collection.createIndex(Indexes.ascending("username"));
+            collection.createIndex(Indexes.descending("balance"));
+        } catch (Exception e) {
+            log.error("Error creating MongoDB user indexes", e);
+        }
     }
 
-    public CompletableFuture<Optional<UserModel>> findByUuid(String uuid) {
-        return CompletableFuture.supplyAsync(() -> {
-            Document doc = collection.find(Filters.eq("uuid", uuid)).first();
-            return Optional.ofNullable(doc).map(mapper::fromDocument);
-        }, executor);
+    @Override
+    public Optional<UserModel> findByUuid(String uuid) {
+        Document doc = collection.find(Filters.eq("uuid", uuid)).first();
+        return Optional.ofNullable(doc).map(mapper::fromDocument);
     }
 
-    public CompletableFuture<Optional<UserModel>> findByUsername(String username) {
-        return CompletableFuture.supplyAsync(() -> {
-            Document doc = collection.find(Filters.eq("username", username)).first();
-            return Optional.ofNullable(doc).map(mapper::fromDocument);
-        }, executor);
+    @Override
+    public Optional<UserModel> findByUsername(String username) {
+        Document doc = collection.find(Filters.eq("username", username)).first();
+        return Optional.ofNullable(doc).map(mapper::fromDocument);
     }
 
-    public CompletableFuture<UserModel> save(UserModel user) {
-        return CompletableFuture.supplyAsync(() -> {
-            Document doc = mapper.toDocument(user);
-            collection.replaceOne(
-                Filters.eq("uuid", user.getUuid()),
-                doc,
-                new ReplaceOptions().upsert(true)
-            );
-            return user;
-        }, executor);
+    @Override
+    public UserModel save(UserModel user) {
+        Document doc = mapper.toDocument(user);
+        collection.replaceOne(
+            Filters.eq("uuid", user.getUuid()),
+            doc,
+            new ReplaceOptions().upsert(true)
+        );
+        return user;
     }
 
-    public CompletableFuture<UserModel> update(UserModel user) {
+    @Override
+    public UserModel update(UserModel user) {
         return save(user);
     }
 
-    public CompletableFuture<Boolean> exists(String uuid) {
-        return CompletableFuture.supplyAsync(() ->
-            collection.find(Filters.eq("uuid", uuid)).first() != null, executor);
+    @Override
+    public boolean exists(String uuid) {
+        return collection.find(Filters.eq("uuid", uuid)).first() != null;
     }
 
-    public CompletableFuture<Void> updateBalance(String uuid, double newBalance) {
-        return CompletableFuture.runAsync(() ->
-            collection.updateOne(
-                Filters.eq("uuid", uuid),
-                Updates.set("balance", newBalance)
-            ), executor);
+    @Override
+    public void updateBalance(String uuid, double newBalance) {
+        collection.updateOne(
+            Filters.eq("uuid", uuid),
+            Updates.set("balance", newBalance)
+        );
     }
 
-    public CompletableFuture<Void> updateLastSeen(String uuid, long timestamp) {
-        return CompletableFuture.runAsync(() ->
-            collection.updateOne(
-                Filters.eq("uuid", uuid),
-                Updates.set("lastSeen", timestamp)
-            ), executor);
+    @Override
+    public void updateLastSeen(String uuid, long timestamp) {
+        collection.updateOne(
+            Filters.eq("uuid", uuid),
+            Updates.set("lastSeen", timestamp)
+        );
     }
 
-    public CompletableFuture<Void> updateFlyState(String uuid, boolean enabled) {
-        return CompletableFuture.runAsync(() ->
-            collection.updateOne(
-                Filters.eq("uuid", uuid),
-                Updates.set("flyEnabled", enabled)
-            ), executor);
+    @Override
+    public void updateFlyState(String uuid, boolean enabled) {
+        collection.updateOne(
+            Filters.eq("uuid", uuid),
+            Updates.set("flyEnabled", enabled)
+        );
     }
 
-    public CompletableFuture<Void> updateGodState(String uuid, boolean enabled) {
-        return CompletableFuture.runAsync(() ->
-            collection.updateOne(
-                Filters.eq("uuid", uuid),
-                Updates.set("godModeEnabled", enabled)
-            ), executor);
+    @Override
+    public void updateGodState(String uuid, boolean enabled) {
+        collection.updateOne(
+            Filters.eq("uuid", uuid),
+            Updates.set("godModeEnabled", enabled)
+        );
     }
 
-    public CompletableFuture<List<UserModel>> findTopBalances(int limit) {
-        return CompletableFuture.supplyAsync(() -> {
-            List<UserModel> users = new ArrayList<>();
-            collection.find()
-                .sort(Sorts.descending("balance"))
-                .limit(limit)
-                .forEach(doc -> users.add(mapper.fromDocument(doc)));
-            return users;
-        }, executor);
+    @Override
+    public List<UserModel> findTopBalances(int limit) {
+        List<UserModel> users = new ArrayList<>();
+        collection.find()
+            .sort(Sorts.descending("balance"))
+            .limit(limit)
+            .forEach(doc -> users.add(mapper.fromDocument(doc)));
+        return users;
     }
 }

@@ -4,6 +4,7 @@ import dev.apolo.api.enums.TransactionStatus;
 import dev.apolo.api.enums.TransactionType;
 import dev.apolo.api.messaging.MessageKey;
 import dev.apolo.api.model.TransactionModel;
+import dev.apolo.api.model.UserModel;
 import dev.apolo.api.result.ServiceResult;
 import dev.apolo.core.repository.interfaces.IPlayerStateRepository;
 import dev.apolo.core.repository.interfaces.ITransactionRepository;
@@ -13,8 +14,8 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
+import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @RequiredArgsConstructor
 public class WithdrawUseCase implements UseCase<WithdrawUseCase.Input, Void> {
@@ -29,35 +30,32 @@ public class WithdrawUseCase implements UseCase<WithdrawUseCase.Input, Void> {
             return ServiceResult.failure(MessageKey.ECONOMY_INVALID_AMOUNT);
         }
 
-        AtomicBoolean insufficient = new AtomicBoolean(false);
         try {
-            userRepository.findByUuid(input.getUuid()).thenAccept(optUser -> {
-                optUser.ifPresent(user -> {
-                    if (user.getBalance() < input.getAmount()) {
-                        insufficient.set(true);
-                        return;
-                    }
-                    double newBalance = user.getBalance() - input.getAmount();
-                    userRepository.updateBalance(input.getUuid(), newBalance);
-                    playerStateRepository.setCachedBalance(input.getUuid(), newBalance, balanceCacheTtl);
+            Optional<UserModel> optUser = userRepository.findByUuid(input.getUuid());
+            if (optUser.isEmpty()) {
+                return ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND);
+            }
 
-                    TransactionModel transaction = TransactionModel.builder()
-                        .id(UUID.randomUUID().toString())
-                        .fromUuid(input.getUuid())
-                        .toUuid(null)
-                        .amount(input.getAmount())
-                        .type(TransactionType.WITHDRAW)
-                        .reason(input.getReason())
-                        .timestamp(System.currentTimeMillis())
-                        .status(TransactionStatus.SUCCESS)
-                        .build();
-                    transactionRepository.save(transaction);
-                });
-            }).get();
-
-            if (insufficient.get()) {
+            UserModel user = optUser.get();
+            if (user.getBalance() < input.getAmount()) {
                 return ServiceResult.failure(MessageKey.ECONOMY_INSUFFICIENT_FUNDS);
             }
+
+            double newBalance = user.getBalance() - input.getAmount();
+            userRepository.updateBalance(input.getUuid(), newBalance);
+            playerStateRepository.setCachedBalance(input.getUuid(), newBalance, balanceCacheTtl);
+
+            transactionRepository.save(TransactionModel.builder()
+                .id(UUID.randomUUID().toString())
+                .fromUuid(input.getUuid())
+                .toUuid(null)
+                .amount(input.getAmount())
+                .type(TransactionType.WITHDRAW)
+                .reason(input.getReason())
+                .timestamp(System.currentTimeMillis())
+                .status(TransactionStatus.SUCCESS)
+                .build());
+
             return ServiceResult.success();
         } catch (Exception e) {
             return ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND);

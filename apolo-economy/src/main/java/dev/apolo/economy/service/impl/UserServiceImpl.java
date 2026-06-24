@@ -19,9 +19,9 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ServiceResult<UserModel> getOrCreateUser(Player player) {
         try {
-            boolean exists = userRepository.exists(player.getUniqueId().toString()).get();
-            if (exists) {
-                return userRepository.findByUuid(player.getUniqueId().toString()).get()
+            String uuid = player.getUniqueId().toString();
+            if (userRepository.exists(uuid)) {
+                return userRepository.findByUuid(uuid)
                     .map(ServiceResult::success)
                     .orElse(createAccountUseCase.execute(CreateAccountUseCase.Input.builder().player(player).build()));
             }
@@ -34,7 +34,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ServiceResult<UserModel> getUser(String uuid) {
         try {
-            return userRepository.findByUuid(uuid).get()
+            return userRepository.findByUuid(uuid)
                 .map(ServiceResult::success)
                 .orElse(ServiceResult.notFound(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND));
         } catch (Exception e) {
@@ -50,7 +50,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ServiceResult<Void> updateUser(UserModel user) {
         try {
-            userRepository.update(user).get();
+            userRepository.update(user);
             return ServiceResult.success();
         } catch (Exception e) {
             return ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND);
@@ -61,8 +61,8 @@ public class UserServiceImpl implements IUserService {
     public ServiceResult<Void> syncState(Player player) {
         try {
             String uuid = player.getUniqueId().toString();
-            userRepository.updateLastSeen(uuid, System.currentTimeMillis()).get();
-            userRepository.updateFlyState(uuid, player.getAllowFlight()).get();
+            userRepository.updateLastSeen(uuid, System.currentTimeMillis());
+            userRepository.updateFlyState(uuid, player.getAllowFlight());
             return ServiceResult.success();
         } catch (Exception e) {
             return ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND);

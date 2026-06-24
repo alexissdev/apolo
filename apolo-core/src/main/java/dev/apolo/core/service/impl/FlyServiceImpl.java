@@ -65,17 +65,15 @@ public class FlyServiceImpl implements IFlyService {
     @Override
     public ServiceResult<Void> restoreState(Player player) {
         String uuid = player.getUniqueId().toString();
-        userRepository.findByUuid(uuid).thenAccept(optUser ->
-            optUser.ifPresent(user -> {
-                if (user.isFlyEnabled()) {
-                    Bukkit.getScheduler().runTask(
-                        Bukkit.getPluginManager().getPlugin("Apolo"),
-                        () -> applyFlyState(player, true)
-                    );
-                }
-                playerStateRepository.setFlyState(uuid, user.isFlyEnabled());
-            })
-        );
+        userRepository.findByUuid(uuid).ifPresent(user -> {
+            if (user.isFlyEnabled()) {
+                Bukkit.getScheduler().runTask(
+                    Bukkit.getPluginManager().getPlugin("Apolo"),
+                    () -> applyFlyState(player, true)
+                );
+            }
+            playerStateRepository.setFlyState(uuid, user.isFlyEnabled());
+        });
         return ServiceResult.success();
     }
 

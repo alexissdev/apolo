@@ -63,10 +63,8 @@ public class GodModeServiceImpl implements IGodModeService {
     @Override
     public ServiceResult<Void> restoreState(Player player) {
         String uuid = player.getUniqueId().toString();
-        userRepository.findByUuid(uuid).thenAccept(optUser ->
-            optUser.ifPresent(user ->
-                playerStateRepository.setGodState(uuid, user.isGodModeEnabled())
-            )
+        userRepository.findByUuid(uuid).ifPresent(user ->
+            playerStateRepository.setGodState(uuid, user.isGodModeEnabled())
         );
         return ServiceResult.success();
     }

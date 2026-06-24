@@ -21,15 +21,15 @@ public class CreateAccountUseCase implements UseCase<CreateAccountUseCase.Input,
     @Override
     public ServiceResult<UserModel> execute(Input input) {
         try {
-            boolean exists = userRepository.exists(input.getPlayer().getUniqueId().toString()).get();
-            if (exists) {
-                return userRepository.findByUuid(input.getPlayer().getUniqueId().toString()).get()
+            String uuid = input.getPlayer().getUniqueId().toString();
+            if (userRepository.exists(uuid)) {
+                return userRepository.findByUuid(uuid)
                     .map(ServiceResult::success)
                     .orElse(ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND));
             }
 
             UserModel newUser = UserModel.builder()
-                .uuid(input.getPlayer().getUniqueId().toString())
+                .uuid(uuid)
                 .username(input.getPlayer().getName())
                 .lastKnownName(input.getPlayer().getName())
                 .balance(startingBalance)
@@ -41,7 +41,7 @@ public class CreateAccountUseCase implements UseCase<CreateAccountUseCase.Input,
                 .metadata(Collections.emptyMap())
                 .build();
 
-            userRepository.save(newUser).get();
+            userRepository.save(newUser);
             return ServiceResult.success(newUser);
         } catch (Exception e) {
             return ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND);

@@ -49,7 +49,7 @@ public class ApoloEconomy implements Economy {
     @Override
     public boolean hasAccount(String playerName) {
         try {
-            return userRepository.findByUsername(playerName).get().isPresent();
+            return userRepository.findByUsername(playerName).isPresent();
         } catch (Exception e) {
             return false;
         }
@@ -58,7 +58,7 @@ public class ApoloEconomy implements Economy {
     @Override
     public boolean hasAccount(OfflinePlayer player) {
         try {
-            return userRepository.exists(player.getUniqueId().toString()).get();
+            return userRepository.exists(player.getUniqueId().toString());
         } catch (Exception e) {
             return false;
         }
@@ -77,7 +77,7 @@ public class ApoloEconomy implements Economy {
     @Override
     public double getBalance(String playerName) {
         try {
-            return userRepository.findByUsername(playerName).get()
+            return userRepository.findByUsername(playerName)
                 .map(user -> {
                     var result = economyService.getBalance(user.getUuid());
                     return result.isSuccess() ? result.getData().orElse(0.0) : 0.0;
@@ -126,7 +126,7 @@ public class ApoloEconomy implements Economy {
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
         try {
-            String uuid = userRepository.findByUsername(playerName).get()
+            String uuid = userRepository.findByUsername(playerName)
                 .map(dev.apolo.api.model.UserModel::getUuid).orElse(null);
             if (uuid == null) {
                 return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player not found");
@@ -164,7 +164,7 @@ public class ApoloEconomy implements Economy {
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
         try {
-            String uuid = userRepository.findByUsername(playerName).get()
+            String uuid = userRepository.findByUsername(playerName)
                 .map(dev.apolo.api.model.UserModel::getUuid).orElse(null);
             if (uuid == null) {
                 return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Player not found");

@@ -25,7 +25,7 @@ public class GetBalanceUseCase implements UseCase<GetBalanceUseCase.Input, Doubl
         }
 
         try {
-            return userRepository.findByUuid(input.getUuid()).get()
+            return userRepository.findByUuid(input.getUuid())
                 .map(user -> {
                     playerStateRepository.setCachedBalance(input.getUuid(), user.getBalance(), balanceCacheTtl);
                     return ServiceResult.success(user.getBalance());

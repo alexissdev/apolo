@@ -16,7 +16,7 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     public ServiceResult<TransactionModel> recordTransaction(TransactionModel transaction) {
         try {
-            TransactionModel saved = transactionRepository.save(transaction).get();
+            TransactionModel saved = transactionRepository.save(transaction);
             return ServiceResult.success(saved);
         } catch (Exception e) {
             return ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND);
@@ -26,7 +26,7 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     public ServiceResult<List<TransactionModel>> getHistory(String uuid, int limit) {
         try {
-            List<TransactionModel> history = transactionRepository.findByPlayer(uuid, limit).get();
+            List<TransactionModel> history = transactionRepository.findByPlayer(uuid, limit);
             return ServiceResult.success(history);
         } catch (Exception e) {
             return ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND);

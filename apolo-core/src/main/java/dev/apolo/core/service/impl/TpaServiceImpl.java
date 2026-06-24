@@ -92,7 +92,13 @@ public class TpaServiceImpl implements ITpaService {
         TpaRequestModel request = gson.fromJson(json, TpaRequestModel.class);
         playerStateRepository.deleteTpaRequest(acceptor.getUniqueId().toString());
 
-        Player from = acceptor.getServer().getPlayer(UUID.fromString(request.getFromUuid()));
+        Player from;
+        try {
+            from = acceptor.getServer().getPlayer(UUID.fromString(request.getFromUuid()));
+        } catch (IllegalArgumentException e) {
+            return ServiceResult.failure(MessageKey.PLAYER_OFFLINE,
+                Collections.singletonMap("player", request.getFromName()));
+        }
         if (from == null || !from.isOnline()) {
             return ServiceResult.failure(MessageKey.PLAYER_OFFLINE,
                 Collections.singletonMap("player", request.getFromName()));

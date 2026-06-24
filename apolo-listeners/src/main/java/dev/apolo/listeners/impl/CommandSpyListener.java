@@ -11,6 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -53,7 +54,7 @@ public class CommandSpyListener implements Listener {
     }
 
     public void deliverLocally(CommandSpyModel model) {
-        Set<String> spyPlayers = playerStateRepository.getCommandSpyPlayers();
+        Set<String> spyPlayers = new HashSet<>(playerStateRepository.getCommandSpyPlayers());
         if (spyPlayers.isEmpty()) return;
 
         Map<String, String> placeholders = Map.of(

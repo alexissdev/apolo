@@ -16,11 +16,13 @@ import dev.apolo.economy.usecase.GetBalanceUseCase;
 import dev.apolo.economy.usecase.TransferUseCase;
 import dev.apolo.economy.usecase.WithdrawUseCase;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 public class EconomyServiceImpl implements IEconomyService {
     private final DepositUseCase depositUseCase;
@@ -114,11 +116,12 @@ public class EconomyServiceImpl implements IEconomyService {
         }
 
         try {
-            userRepository.updateBalance(uuid, newBalance).get();
+            userRepository.updateBalance(uuid, newBalance);
             playerStateRepository.setCachedBalance(uuid, newBalance, balanceCacheTtl);
             economySync.publishBalanceUpdate(uuid, newBalance);
             return ServiceResult.success();
         } catch (Exception e) {
+            log.error("Error setting balance for {}", uuid, e);
             return ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND);
         }
     }
@@ -135,9 +138,10 @@ public class EconomyServiceImpl implements IEconomyService {
     @Override
     public ServiceResult<List<UserModel>> getTopBalances(int limit) {
         try {
-            List<UserModel> top = userRepository.findTopBalances(limit).get();
+            List<UserModel> top = userRepository.findTopBalances(limit);
             return ServiceResult.success(top);
         } catch (Exception e) {
+            log.error("Error fetching top balances", e);
             return ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND);
         }
     }

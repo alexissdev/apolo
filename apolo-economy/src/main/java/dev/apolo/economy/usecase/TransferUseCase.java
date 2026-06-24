@@ -32,8 +32,8 @@ public class TransferUseCase implements UseCase<TransferUseCase.Input, Void> {
         }
 
         try {
-            Optional<UserModel> fromOpt = userRepository.findByUuid(input.getFromUuid()).get();
-            Optional<UserModel> toOpt = userRepository.findByUuid(input.getToUuid()).get();
+            Optional<UserModel> fromOpt = userRepository.findByUuid(input.getFromUuid());
+            Optional<UserModel> toOpt = userRepository.findByUuid(input.getToUuid());
 
             if (fromOpt.isEmpty()) {
                 return ServiceResult.failure(MessageKey.ECONOMY_ACCOUNT_NOT_FOUND);

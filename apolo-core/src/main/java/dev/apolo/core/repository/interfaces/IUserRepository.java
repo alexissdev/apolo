@@ -4,17 +4,16 @@ import dev.apolo.api.model.UserModel;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 public interface IUserRepository {
-    CompletableFuture<Optional<UserModel>> findByUuid(String uuid);
-    CompletableFuture<Optional<UserModel>> findByUsername(String username);
-    CompletableFuture<UserModel> save(UserModel user);
-    CompletableFuture<UserModel> update(UserModel user);
-    CompletableFuture<Boolean> exists(String uuid);
-    CompletableFuture<Void> updateBalance(String uuid, double newBalance);
-    CompletableFuture<Void> updateLastSeen(String uuid, long timestamp);
-    CompletableFuture<Void> updateFlyState(String uuid, boolean enabled);
-    CompletableFuture<Void> updateGodState(String uuid, boolean enabled);
-    CompletableFuture<List<UserModel>> findTopBalances(int limit);
+    Optional<UserModel> findByUuid(String uuid);
+    Optional<UserModel> findByUsername(String username);
+    UserModel save(UserModel user);
+    UserModel update(UserModel user);
+    boolean exists(String uuid);
+    void updateBalance(String uuid, double newBalance);
+    void updateLastSeen(String uuid, long timestamp);
+    void updateFlyState(String uuid, boolean enabled);
+    void updateGodState(String uuid, boolean enabled);
+    List<UserModel> findTopBalances(int limit);
 }

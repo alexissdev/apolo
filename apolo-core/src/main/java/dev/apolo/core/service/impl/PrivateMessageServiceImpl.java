@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -103,7 +104,7 @@ public class PrivateMessageServiceImpl implements IPrivateMessageService {
             "to", model.getToName(),
             "message", model.getMessage()
         );
-        for (String spyUuid : playerStateRepository.getSocialSpyPlayers()) {
+        for (String spyUuid : new HashSet<>(playerStateRepository.getSocialSpyPlayers())) {
             if (spyUuid.equals(model.getFromUuid()) || spyUuid.equals(model.getToUuid())) continue;
             try {
                 Player spy = Bukkit.getPlayer(UUID.fromString(spyUuid));
