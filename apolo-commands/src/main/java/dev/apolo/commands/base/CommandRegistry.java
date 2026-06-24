@@ -1,14 +1,14 @@
 package dev.apolo.commands.base;
 
 import org.bukkit.command.PluginCommand;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Map;
 
 public class CommandRegistry {
-    private final Plugin plugin;
+    private final JavaPlugin plugin;
 
-    public CommandRegistry(Plugin plugin) {
+    public CommandRegistry(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 

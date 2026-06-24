@@ -5,6 +5,7 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.Sorts;
 import dev.apolo.api.model.TransactionModel;
+import dev.apolo.core.repository.interfaces.ITransactionRepository;
 import dev.apolo.database.MongoManager;
 import dev.apolo.database.collection.CollectionNames;
 import dev.apolo.database.mapper.TransactionDocumentMapper;
@@ -18,7 +19,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 @Slf4j
-public class MongoTransactionRepository {
+public class MongoTransactionRepository implements ITransactionRepository {
     private final MongoCollection<Document> collection;
     private final TransactionDocumentMapper mapper;
     private final Executor executor;

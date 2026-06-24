@@ -17,7 +17,7 @@ public class ArmorRepairStrategy implements RepairStrategy {
         ItemStack[] armor = player.getInventory().getArmorContents();
         int repaired = 0;
         for (ItemStack piece : armor) {
-            if (piece == null || piece.getType().isAir()) continue;
+            if (piece == null || piece.getType() == org.bukkit.Material.AIR) continue;
             ItemMeta meta = piece.getItemMeta();
             if (!(meta instanceof Damageable)) continue;
             Damageable damageable = (Damageable) meta;

@@ -3,6 +3,7 @@ package dev.apolo.plugin.di;
 import com.google.inject.AbstractModule;
 import dev.apolo.plugin.config.ApoloConfig;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class ApoloModule extends AbstractModule {
     private final Plugin plugin;
@@ -20,7 +21,7 @@ public class ApoloModule extends AbstractModule {
         install(new MessagingModule(plugin));
         install(new RepositoryModule());
         install(new EconomyModule(plugin, config));
-        install(new CommandModule(plugin));
+        install(new CommandModule((JavaPlugin) plugin));
         install(new ListenerModule(plugin, config));
     }
 }

@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("io.freefair.lombok")
-    id("com.github.johnrengelman.shadow")
+    id("com.gradleup.shadow")
     id("net.minecrell.plugin-yml.bukkit")
 }
 
@@ -61,6 +61,9 @@ dependencies {
 tasks {
     shadowJar {
         archiveClassifier.set("")
+        mergeServiceFiles()
+        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA", "META-INF/INDEX.LIST")
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.EXCLUDE
         relocate("com.google.inject", "dev.apolo.shaded.guice")
         relocate("redis.clients.jedis", "dev.apolo.shaded.jedis")
         relocate("com.google.gson", "dev.apolo.shaded.gson")

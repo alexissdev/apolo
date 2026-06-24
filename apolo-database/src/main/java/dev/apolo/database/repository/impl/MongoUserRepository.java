@@ -8,6 +8,7 @@ import com.mongodb.client.model.ReplaceOptions;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
 import dev.apolo.api.model.UserModel;
+import dev.apolo.core.repository.interfaces.IUserRepository;
 import dev.apolo.database.MongoManager;
 import dev.apolo.database.collection.CollectionNames;
 import dev.apolo.database.mapper.UserDocumentMapper;
@@ -22,7 +23,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 @Slf4j
-public class MongoUserRepository {
+public class MongoUserRepository implements IUserRepository {
     private final MongoCollection<Document> collection;
     private final UserDocumentMapper mapper;
     private final Executor executor;

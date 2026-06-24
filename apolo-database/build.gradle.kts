@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":apolo-api"))
+    implementation(project(":apolo-core"))
     implementation("org.mongodb:mongodb-driver-sync:4.11.1")
     compileOnly("org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT")
 }

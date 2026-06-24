@@ -23,6 +23,7 @@ import dev.apolo.core.service.impl.GodModeServiceImpl;
 import dev.apolo.core.service.impl.RepairServiceImpl;
 import dev.apolo.core.service.impl.TpaServiceImpl;
 import dev.apolo.core.service.impl.WarpServiceImpl;
+import dev.apolo.api.service.IMessageService;
 import dev.apolo.api.service.IPrivateMessageService;
 import dev.apolo.core.service.impl.PrivateMessageServiceImpl;
 import dev.apolo.core.usecase.RestorePlayerStateUseCase;

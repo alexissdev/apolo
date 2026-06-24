@@ -35,12 +35,12 @@ import dev.apolo.commands.impl.SocialSpyCommand;
 import dev.apolo.core.repository.interfaces.IPlayerStateRepository;
 import dev.apolo.commands.impl.WarpCommand;
 import dev.apolo.commands.impl.WarpsCommand;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandModule extends AbstractModule {
-    private final Plugin plugin;
+    private final JavaPlugin plugin;
 
-    public CommandModule(Plugin plugin) {
+    public CommandModule(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 

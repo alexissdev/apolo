@@ -15,7 +15,7 @@ public class HandRepairStrategy implements RepairStrategy {
     @Override
     public ServiceResult<RepairResultModel> repair(Player player) {
         ItemStack item = player.getInventory().getItemInMainHand();
-        if (item == null || item.getType().isAir()) {
+        if (item == null || item.getType() == org.bukkit.Material.AIR) {
             return ServiceResult.failure(MessageKey.REPAIR_NOTHING_TO_REPAIR);
         }
         ItemMeta meta = item.getItemMeta();
