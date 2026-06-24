@@ -32,6 +32,7 @@ godmode:
 
 warps:
   per-page: 6
+  cooldown: 5
 
 economy:
   starting-balance: 500.0

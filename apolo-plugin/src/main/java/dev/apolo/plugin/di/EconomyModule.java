@@ -68,8 +68,9 @@ public class EconomyModule extends AbstractModule {
 
     @Provides
     @Singleton
-    public IWarpService provideWarpService(IWarpRepository warpRepository) {
-        return new WarpServiceImpl(warpRepository);
+    public IWarpService provideWarpService(IWarpRepository warpRepository,
+                                           IPlayerStateRepository playerStateRepository) {
+        return new WarpServiceImpl(warpRepository, playerStateRepository, config.getWarpCooldown());
     }
 
     @Provides

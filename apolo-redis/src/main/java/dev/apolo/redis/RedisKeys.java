@@ -29,6 +29,10 @@ public final class RedisKeys {
         return PREFIX + ":god:" + uuid;
     }
 
+    public static String warpCooldown(String uuid) {
+        return PREFIX + ":warp:cooldown:" + uuid;
+    }
+
     public static String repairCooldown(String uuid) {
         return PREFIX + ":repair:cooldown:" + uuid;
     }

@@ -54,6 +54,7 @@ public enum MessageKey {
     WARP_NOT_FOUND("warp.not-found"),
     WARP_ALREADY_EXISTS("warp.already-exists"),
     WARP_TELEPORTING("warp.teleporting"),
+    WARP_COOLDOWN("warp.cooldown"),
     WARP_LIST_HEADER("warp.list.header"),
     WARP_LIST_ENTRY("warp.list.entry"),
     WARP_LIST_FOOTER("warp.list.footer"),

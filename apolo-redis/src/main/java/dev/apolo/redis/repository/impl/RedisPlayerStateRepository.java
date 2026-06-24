@@ -46,6 +46,18 @@ public class RedisPlayerStateRepository implements IPlayerStateRepository {
         redisManager.delete(RedisKeys.godState(uuid));
     }
 
+    public void setWarpCooldown(String uuid, int ttlSeconds) {
+        redisManager.setEx(RedisKeys.warpCooldown(uuid), ttlSeconds, "1");
+    }
+
+    public boolean hasWarpCooldown(String uuid) {
+        return redisManager.exists(RedisKeys.warpCooldown(uuid));
+    }
+
+    public long getWarpCooldownTtl(String uuid) {
+        return redisManager.ttl(RedisKeys.warpCooldown(uuid));
+    }
+
     public void setRepairCooldown(String uuid, int ttlSeconds) {
         redisManager.setEx(RedisKeys.repairCooldown(uuid), ttlSeconds, "1");
     }

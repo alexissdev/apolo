@@ -7,6 +7,7 @@ import dev.apolo.api.messaging.MessageKey;
 import dev.apolo.api.model.WarpModel;
 import dev.apolo.api.result.ServiceResult;
 import dev.apolo.api.service.IWarpService;
+import dev.apolo.core.repository.interfaces.IPlayerStateRepository;
 import dev.apolo.core.repository.interfaces.IWarpRepository;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
@@ -20,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WarpServiceImpl implements IWarpService {
     private final IWarpRepository warpRepository;
+    private final IPlayerStateRepository playerStateRepository;
+    private final int warpCooldown;
 
     @Override
     public ServiceResult<Void> createWarp(String name, Location location, Player creator) {
@@ -85,6 +88,13 @@ public class WarpServiceImpl implements IWarpService {
 
     @Override
     public ServiceResult<Void> teleportToWarp(Player player, String name) {
+        String uuid = player.getUniqueId().toString();
+        if (playerStateRepository.hasWarpCooldown(uuid)) {
+            long remaining = playerStateRepository.getWarpCooldownTtl(uuid);
+            return ServiceResult.cooldown(MessageKey.WARP_COOLDOWN,
+                Collections.singletonMap("seconds", String.valueOf(remaining)));
+        }
+
         return warpRepository.findByName(name).map(warp -> {
             ApoloWarpTeleportEvent event = new ApoloWarpTeleportEvent(player, warp);
             player.getServer().getPluginManager().callEvent(event);
@@ -99,6 +109,7 @@ public class WarpServiceImpl implements IWarpService {
             Location loc = new Location(world, warp.getX(), warp.getY(), warp.getZ(),
                 warp.getYaw(), warp.getPitch());
             player.teleport(loc);
+            playerStateRepository.setWarpCooldown(uuid, warpCooldown);
             return ServiceResult.<Void>success();
         }).orElse(ServiceResult.notFound(MessageKey.WARP_NOT_FOUND,
             Collections.singletonMap("warp", name)));

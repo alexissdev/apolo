@@ -30,6 +30,7 @@ public class ApoloConfig {
     private boolean godmodeRestoreOnJoin;
 
     private int warpsPerPage;
+    private int warpCooldown;
 
     private double startingBalance;
     private String currencySymbol;
@@ -71,6 +72,7 @@ public class ApoloConfig {
         godmodeRestoreOnJoin = config.getBoolean("godmode.restore-on-join", true);
 
         warpsPerPage = config.getInt("warps.per-page", 6);
+        warpCooldown = config.getInt("warps.cooldown", 5);
 
         startingBalance = config.getDouble("economy.starting-balance", 500.0);
         currencySymbol = config.getString("economy.currency-symbol", "$");

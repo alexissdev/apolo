@@ -44,6 +44,7 @@ warp:
   not-found: "{prefix}&cEl warp &e{warp} &cno existe."
   already-exists: "{prefix}&cEl warp &e{warp} &cya existe."
   teleporting: "{prefix}&7Teletransportando al warp &a{warp}&7..."
+  cooldown: "{prefix}&cDebes esperar &e{seconds}s &cpara volver a usar /warp."
   list:
     header: "{prefix}&7&m----&r &bWarps &7(&e{page}&7/&e{total_pages}&7) &7&m----"
     entry: "  &8• &a{warp} &7- &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"

@@ -34,6 +34,10 @@ public interface IPlayerStateRepository {
     boolean hasGodState(String uuid);
     void deleteGodState(String uuid);
 
+    void setWarpCooldown(String uuid, int ttlSeconds);
+    boolean hasWarpCooldown(String uuid);
+    long getWarpCooldownTtl(String uuid);
+
     void setRepairCooldown(String uuid, int ttlSeconds);
     boolean hasRepairCooldown(String uuid);
     long getRepairCooldownTtl(String uuid);
