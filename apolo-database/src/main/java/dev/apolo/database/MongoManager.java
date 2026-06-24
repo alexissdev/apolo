@@ -14,12 +14,18 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Slf4j
 public class MongoManager {
     private final MongoClient mongoClient;
     @Getter
     private final MongoDatabase database;
+
+    static {
+        Logger.getLogger("dev.apolo.shaded.mongodb").setLevel(Level.WARNING);
+    }
 
     public MongoManager(MongoConfig config) {
         CodecRegistry apoloRegistry = CodecRegistries.fromProviders(new ApoloCodecRegistry());
