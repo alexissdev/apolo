@@ -2,14 +2,14 @@
 
 ![Apolo](public/banner.png)
 
-Plugin de utilidades para Spigot 1.13.2+ que incluye economía, teletransporte, warps, vuelo, modo dios, reparación, mensajería privada y herramientas de administración. Soporta sincronización entre servidores vía Redis PubSub.
+Plugin de utilidades para Spigot 1.8.8+ que incluye economía, teletransporte, warps, vuelo, modo dios, reparación, mensajería privada y herramientas de administración. Soporta sincronización entre servidores vía Redis PubSub.
 
 ## Requisitos
 
 | Requisito | Versión mínima |
 |-----------|----------------|
 | Java | 11 |
-| Spigot / Paper | 1.13.2 |
+| Spigot / Paper | 1.8.8 |
 | MongoDB | 7.0 |
 | Redis | 7.2 |
 | Vault *(opcional)* | 1.7.1 |
@@ -30,11 +30,11 @@ docker compose up -d
 ./gradlew clean shadowJar
 ```
 
-El JAR generado se encuentra en `apolo-plugin/build/libs/apolo-plugin-1.0.0.jar`.
+El JAR generado se encuentra en `apolo-plugin/build/libs/apolo-plugin.jar`.
 
 ### 3. Instalar
 
-Copia el JAR a la carpeta `plugins/` de tu servidor y reinícialo. El plugin genera `config.yml` y `messages.yml` en `plugins/Apolo/` al primer inicio.
+Copia el JAR a la carpeta `plugins/` de tu servidor y reinícialo. El plugin genera `config.yml` y `messages.yml` en `plugins/Apolo/` al primer inicio. En reinicios posteriores, las claves nuevas se agregan automáticamente al `config.yml` existente sin pisar los valores ya configurados.
 
 ---
 
@@ -77,6 +77,7 @@ godmode:
 
 warps:
   per-page: 6              # Warps por página en /warps
+  cooldown: 5              # Cooldown en segundos entre usos de /warp
 
 economy:
   starting-balance: 500.0
@@ -85,7 +86,7 @@ economy:
   currency-name-plural: "Dólares"
   decimal-digits: 2
   max-balance: 1000000000.0
-  min-transfer-amount: 1.0
+  min-transfer-amount: 1.0  # Monto mínimo permitido en /pay
 
 cache:
   balance-ttl: 300         # TTL del caché de saldo en Redis (segundos)
@@ -111,6 +112,8 @@ Los mensajes se personalizan en `plugins/Apolo/messages.yml`. Todos soportan có
 | `/eco give <jugador> <cantidad>` | | Depositar dinero a un jugador | `apolo.eco` |
 | `/eco take <jugador> <cantidad>` | | Retirar dinero de un jugador | `apolo.eco` |
 
+> `/pay` rechaza montos menores al valor de `economy.min-transfer-amount` configurado.
+
 ### Teletransporte
 
 | Comando | Alias | Descripción | Permiso |
@@ -119,15 +122,21 @@ Los mensajes se personalizan en `plugins/Apolo/messages.yml`. Todos soportan có
 | `/tphere <jugador>` | | Solicitar que un jugador venga a tu posición | `apolo.tphere` |
 | `/tpaccept` | | Aceptar la solicitud de TPA pendiente | — |
 | `/tpadeny` | | Rechazar la solicitud de TPA pendiente | — |
+| `/tpacancel` | | Cancelar tu propia solicitud de TPA enviada | `apolo.tpa` |
+
+> El cooldown entre solicitudes puede saltarse con el permiso `apolo.tpa.bypass-cooldown`.
 
 ### Warps
 
 | Comando | Alias | Descripción | Permiso |
 |---------|-------|-------------|---------|
 | `/warp <nombre>` | | Teletransportarse a un warp | `apolo.warp` |
-| `/warps [página]` | | Listar todos los warps disponibles | `apolo.warp` |
+| `/warps [página]` | | Listar warps (click para teletransportarse) | `apolo.warp` |
 | `/setwarp <nombre>` | | Crear un warp en tu posición actual | `apolo.warp.set` |
 | `/delwarp <nombre>` | | Eliminar un warp | `apolo.warp.delete` |
+
+> El listado de `/warps` muestra entradas clickeables que ejecutan `/warp <nombre>` directamente.  
+> El cooldown entre teleports puede saltarse con el permiso `apolo.warp.bypass-cooldown`.
 
 ### Vuelo y Modo Dios
 
@@ -143,6 +152,8 @@ Los mensajes se personalizan en `plugins/Apolo/messages.yml`. Todos soportan có
 | `/repair` | | Reparar el ítem en mano | `apolo.repair` |
 | `/repair armor` | | Reparar la armadura equipada | `apolo.repair.armor` |
 | `/repair all` | | Reparar mano y armadura | `apolo.repair.all` |
+
+> El cooldown entre reparaciones puede saltarse con el permiso `apolo.repair.bypass-cooldown`.
 
 ### Modo de Juego
 
@@ -160,6 +171,34 @@ Modos válidos: `survival`, `creative`, `adventure`, `spectator` (también acept
 | `/reply <mensaje>` | `r` | Responder al último mensaje recibido | — |
 | `/socialspy` | `ss` | Activar/desactivar la escucha de mensajes privados | `apolo.socialspy` |
 | `/commandspy` | `cs` | Activar/desactivar el espionaje de comandos | `apolo.commandspy` |
+
+---
+
+## Permisos completos
+
+| Permiso | Descripción |
+|---------|-------------|
+| `apolo.gamemode` | Cambiar modo de juego propio |
+| `apolo.gamemode.others` | Cambiar modo de juego de otros |
+| `apolo.gamemode.<modo>` | Usar un modo específico (`survival`, `creative`, `adventure`, `spectator`) |
+| `apolo.tpa` | Enviar solicitudes TPA |
+| `apolo.tpa.bypass-cooldown` | Saltarse el cooldown de TPA |
+| `apolo.tphere` | Enviar solicitudes TPHere |
+| `apolo.warp` | Usar warps y listarlos |
+| `apolo.warp.set` | Crear warps |
+| `apolo.warp.delete` | Eliminar warps |
+| `apolo.warp.bypass-cooldown` | Saltarse el cooldown de `/warp` |
+| `apolo.fly` | Vuelo propio |
+| `apolo.fly.others` | Vuelo de otros jugadores |
+| `apolo.godmode` | Modo dios propio |
+| `apolo.godmode.others` | Modo dios de otros jugadores |
+| `apolo.repair` | Reparar ítem en mano |
+| `apolo.repair.armor` | Reparar armadura |
+| `apolo.repair.all` | Reparar mano y armadura |
+| `apolo.repair.bypass-cooldown` | Saltarse el cooldown de `/repair` |
+| `apolo.eco` | Administrar balances (admin) |
+| `apolo.socialspy` | Espiar mensajes privados |
+| `apolo.commandspy` | Espiar comandos en la red |
 
 ---
 
@@ -196,7 +235,7 @@ apolo/
 
 Las dependencias entre módulos son unidireccionales: `apolo-plugin` depende de todos los demás; ningún módulo inferior conoce a `apolo-plugin`.
 
-La inyección de dependencias se gestiona con **Google Guice**. Las implementaciones internas (MongoDB, Redis) están reubicadas en el JAR con Shadow para evitar conflictos con otros plugins.
+La inyección de dependencias se gestiona con **Google Guice**. Las implementaciones internas (MongoDB, Redis, Guava) están reubicadas en el JAR con Shadow para evitar conflictos con otros plugins.
 
 ---
 
