@@ -12,7 +12,6 @@ out/
 
 # Java
 *.class
-*.jar
 *.war
 *.ear
 
