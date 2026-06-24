@@ -20,104 +20,104 @@ bukkit {
     commands {
         register("gamemode") {
             aliases = listOf("gm")
-            description = "Cambia el modo de juego propio o de otro jugador."
-            usage = "/<command> <survival|creative|adventure|spectator> [jugador]"
+            description = "Change your own or another player's game mode."
+            usage = "/<command> <survival|creative|adventure|spectator> [player]"
             permission = "apolo.gamemode"
         }
         register("tpa") {
-            description = "Solicita teletransportarte a la ubicación de otro jugador."
-            usage = "/<command> <jugador>"
+            description = "Send a teleport request to another player."
+            usage = "/<command> <player>"
             permission = "apolo.tpa"
         }
         register("tpaccept") {
-            description = "Acepta la solicitud de TPA pendiente."
+            description = "Accept the pending TPA request."
             usage = "/<command>"
         }
         register("tpadeny") {
-            description = "Rechaza la solicitud de TPA pendiente."
+            description = "Deny the pending TPA request."
             usage = "/<command>"
         }
         register("tphere") {
-            description = "Solicita que otro jugador se teletransporte a tu ubicación."
-            usage = "/<command> <jugador>"
+            description = "Request another player to teleport to your location."
+            usage = "/<command> <player>"
             permission = "apolo.tphere"
         }
         register("warp") {
-            description = "Teletransporta a un warp existente."
-            usage = "/<command> <nombre>"
+            description = "Teleport to an existing warp."
+            usage = "/<command> <name>"
             permission = "apolo.warp"
         }
         register("setwarp") {
-            description = "Crea un warp en tu posición actual."
-            usage = "/<command> <nombre>"
+            description = "Create a warp at your current location."
+            usage = "/<command> <name>"
             permission = "apolo.warp.set"
         }
         register("delwarp") {
-            description = "Elimina un warp existente."
-            usage = "/<command> <nombre>"
+            description = "Delete an existing warp."
+            usage = "/<command> <name>"
             permission = "apolo.warp.delete"
         }
         register("warps") {
-            description = "Lista todos los warps disponibles con paginación."
-            usage = "/<command> [página]"
+            description = "List all available warps with pagination."
+            usage = "/<command> [page]"
             permission = "apolo.warp"
         }
         register("fly") {
-            description = "Activa o desactiva el vuelo propio o de otro jugador."
-            usage = "/<command> [jugador]"
+            description = "Toggle flight for yourself or another player."
+            usage = "/<command> [player]"
             permission = "apolo.fly"
         }
         register("godmode") {
             aliases = listOf("god")
-            description = "Activa o desactiva el modo dios propio o de otro jugador."
-            usage = "/<command> [jugador]"
+            description = "Toggle god mode for yourself or another player."
+            usage = "/<command> [player]"
             permission = "apolo.godmode"
         }
         register("repair") {
-            description = "Repara el ítem en mano, la armadura o ambos."
+            description = "Repair the item in hand, equipped armor, or both."
             usage = "/<command> [hand|armor|all]"
             permission = "apolo.repair"
         }
         register("balance") {
             aliases = listOf("bal", "money")
-            description = "Muestra el saldo económico propio o de otro jugador."
-            usage = "/<command> [jugador]"
+            description = "Show your own or another player's balance."
+            usage = "/<command> [player]"
         }
         register("pay") {
             aliases = listOf("transfer")
-            description = "Transfiere dinero a otro jugador."
-            usage = "/<command> <jugador> <cantidad>"
+            description = "Transfer money to another player."
+            usage = "/<command> <player> <amount>"
         }
         register("eco") {
             aliases = listOf("economy")
-            description = "Administra el balance económico de los jugadores (set/give/take)."
-            usage = "/<command> <set|give|take> <jugador> <cantidad>"
+            description = "Manage a player's balance (set/give/take). Admin only."
+            usage = "/<command> <set|give|take> <player> <amount>"
             permission = "apolo.eco"
         }
         register("baltop") {
             aliases = listOf("balancetop")
-            description = "Muestra el ranking de jugadores con mayor saldo."
+            description = "Show the top players ranked by balance."
             usage = "/<command>"
         }
         register("msg") {
             aliases = listOf("message", "tell", "whisper")
-            description = "Envía un mensaje privado a otro jugador (funciona entre servidores)."
-            usage = "/<command> <jugador> <mensaje>"
+            description = "Send a private message to a player (cross-server)."
+            usage = "/<command> <player> <message>"
         }
         register("reply") {
             aliases = listOf("r")
-            description = "Responde al último mensaje privado recibido."
-            usage = "/<command> <mensaje>"
+            description = "Reply to the last private message received."
+            usage = "/<command> <message>"
         }
         register("socialspy") {
             aliases = listOf("ss")
-            description = "Activa o desactiva la escucha de mensajes privados de otros jugadores."
+            description = "Toggle spying on private messages between players."
             usage = "/<command>"
             permission = "apolo.socialspy"
         }
         register("commandspy") {
             aliases = listOf("cs")
-            description = "Activa o desactiva el espionaje de comandos ejecutados en la red."
+            description = "Toggle spying on commands executed across the network."
             usage = "/<command>"
             permission = "apolo.commandspy"
         }
