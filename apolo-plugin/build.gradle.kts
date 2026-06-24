@@ -121,6 +121,37 @@ bukkit {
             usage = "/<command>"
             permission = "apolo.commandspy"
         }
+        register("tpacancel") {
+            description = "Cancel your outgoing TPA request."
+            usage = "/<command>"
+            permission = "apolo.tpa"
+        }
+    }
+    permissions {
+        register("apolo.gamemode") { description = "Change own game mode." }
+        register("apolo.gamemode.others") { description = "Change another player's game mode." }
+        register("apolo.gamemode.survival") { description = "Use survival game mode." }
+        register("apolo.gamemode.creative") { description = "Use creative game mode." }
+        register("apolo.gamemode.adventure") { description = "Use adventure game mode." }
+        register("apolo.gamemode.spectator") { description = "Use spectator game mode." }
+        register("apolo.tpa") { description = "Send TPA requests to other players." }
+        register("apolo.tpa.bypass-cooldown") { description = "Bypass the TPA cooldown." }
+        register("apolo.tphere") { description = "Send TPHere requests to other players." }
+        register("apolo.warp") { description = "Teleport to warps." }
+        register("apolo.warp.set") { description = "Create warps." }
+        register("apolo.warp.delete") { description = "Delete warps." }
+        register("apolo.warp.bypass-cooldown") { description = "Bypass the warp teleport cooldown." }
+        register("apolo.fly") { description = "Toggle own flight." }
+        register("apolo.fly.others") { description = "Toggle another player's flight." }
+        register("apolo.godmode") { description = "Toggle own god mode." }
+        register("apolo.godmode.others") { description = "Toggle another player's god mode." }
+        register("apolo.repair") { description = "Repair item in hand." }
+        register("apolo.repair.armor") { description = "Repair equipped armor." }
+        register("apolo.repair.all") { description = "Repair hand item and armor." }
+        register("apolo.repair.bypass-cooldown") { description = "Bypass the repair cooldown." }
+        register("apolo.eco") { description = "Manage player balances (admin)." }
+        register("apolo.socialspy") { description = "Spy on private messages between players." }
+        register("apolo.commandspy") { description = "Spy on commands executed across the network." }
     }
 }
 
