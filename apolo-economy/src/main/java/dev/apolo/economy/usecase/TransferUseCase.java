@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -46,7 +47,10 @@ public class TransferUseCase implements UseCase<TransferUseCase.Input, Void> {
             UserModel to = toOpt.get();
 
             if (from.getBalance() < input.getAmount()) {
-                return ServiceResult.failure(MessageKey.ECONOMY_INSUFFICIENT_FUNDS);
+                return ServiceResult.failure(MessageKey.ECONOMY_INSUFFICIENT_FUNDS, Map.of(
+                    "balance", String.format("%.2f", from.getBalance()),
+                    "amount", String.format("%.2f", input.getAmount())
+                ));
             }
 
             double newFromBalance = from.getBalance() - input.getAmount();

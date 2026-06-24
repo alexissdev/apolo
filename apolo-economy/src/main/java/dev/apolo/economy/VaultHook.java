@@ -1,6 +1,5 @@
 package dev.apolo.economy;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -11,7 +10,6 @@ import org.bukkit.plugin.ServicePriority;
 public class VaultHook {
     private final Plugin plugin;
     private final ApoloEconomy apoloEconomy;
-    @Getter
     private boolean vaultAvailable;
 
     public VaultHook(Plugin plugin, ApoloEconomy apoloEconomy) {

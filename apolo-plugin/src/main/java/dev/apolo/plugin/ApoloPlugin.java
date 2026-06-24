@@ -69,7 +69,6 @@ public class ApoloPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        saveDefaultConfig();
         ConfigLoader configLoader = new ConfigLoader(this);
         config = configLoader.load();
 
