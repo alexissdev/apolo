@@ -96,7 +96,7 @@ public class ApoloPlugin extends JavaPlugin {
         org.bukkit.Bukkit.getConsoleSender().sendMessage("§3 /  ___  \\  __/| |_| | |__| |_| |");
         org.bukkit.Bukkit.getConsoleSender().sendMessage("§3/_/   \\_\\_|    \\___/|_____\\___/ ");
         org.bukkit.Bukkit.getConsoleSender().sendMessage("§8  ─────────────────────────────");
-        org.bukkit.Bukkit.getConsoleSender().sendMessage("§7  Version §b" + v + "  §8│  §7by §bTuNombre");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§7  Version §b" + v + "  §8│  §7by §bAlexisDev");
         org.bukkit.Bukkit.getConsoleSender().sendMessage("§8  ─────────────────────────────");
         org.bukkit.Bukkit.getConsoleSender().sendMessage("");
     }
