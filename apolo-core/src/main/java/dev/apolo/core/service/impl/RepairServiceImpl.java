@@ -36,7 +36,7 @@ public class RepairServiceImpl implements IRepairService {
 
     private ServiceResult<RepairResultModel> doRepair(Player player, RepairStrategy strategy) {
         String uuid = player.getUniqueId().toString();
-        if (playerStateRepository.hasRepairCooldown(uuid)) {
+        if (!player.hasPermission("apolo.repair.bypass-cooldown") && playerStateRepository.hasRepairCooldown(uuid)) {
             long remaining = playerStateRepository.getRepairCooldownTtl(uuid);
             return ServiceResult.cooldown(MessageKey.REPAIR_COOLDOWN,
                 Collections.singletonMap("seconds", String.valueOf(remaining)));

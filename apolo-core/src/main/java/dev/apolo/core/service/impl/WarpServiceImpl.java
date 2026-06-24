@@ -89,7 +89,7 @@ public class WarpServiceImpl implements IWarpService {
     @Override
     public ServiceResult<Void> teleportToWarp(Player player, String name) {
         String uuid = player.getUniqueId().toString();
-        if (playerStateRepository.hasWarpCooldown(uuid)) {
+        if (!player.hasPermission("apolo.warp.bypass-cooldown") && playerStateRepository.hasWarpCooldown(uuid)) {
             long remaining = playerStateRepository.getWarpCooldownTtl(uuid);
             return ServiceResult.cooldown(MessageKey.WARP_COOLDOWN,
                 Collections.singletonMap("seconds", String.valueOf(remaining)));

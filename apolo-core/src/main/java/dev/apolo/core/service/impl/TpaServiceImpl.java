@@ -26,7 +26,7 @@ public class TpaServiceImpl implements ITpaService {
 
     @Override
     public ServiceResult<Void> sendRequest(Player from, Player target) {
-        if (playerStateRepository.hasTpaCooldown(from.getUniqueId().toString())) {
+        if (!from.hasPermission("apolo.tpa.bypass-cooldown") && playerStateRepository.hasTpaCooldown(from.getUniqueId().toString())) {
             long remaining = playerStateRepository.getTpaCooldownTtl(from.getUniqueId().toString());
             return ServiceResult.cooldown(MessageKey.TPA_COOLDOWN,
                 Collections.singletonMap("seconds", String.valueOf(remaining)));
@@ -49,13 +49,16 @@ public class TpaServiceImpl implements ITpaService {
         }
 
         playerStateRepository.setTpaRequest(target.getUniqueId().toString(), gson.toJson(request), tpaTimeout);
-        playerStateRepository.setTpaCooldown(from.getUniqueId().toString(), tpaCooldown);
+        playerStateRepository.setTpaSent(from.getUniqueId().toString(), target.getUniqueId().toString(), tpaTimeout);
+        if (!from.hasPermission("apolo.tpa.bypass-cooldown")) {
+            playerStateRepository.setTpaCooldown(from.getUniqueId().toString(), tpaCooldown);
+        }
         return ServiceResult.success();
     }
 
     @Override
     public ServiceResult<Void> sendHereRequest(Player from, Player target) {
-        if (playerStateRepository.hasTpaCooldown(from.getUniqueId().toString())) {
+        if (!from.hasPermission("apolo.tpa.bypass-cooldown") && playerStateRepository.hasTpaCooldown(from.getUniqueId().toString())) {
             long remaining = playerStateRepository.getTpaCooldownTtl(from.getUniqueId().toString());
             return ServiceResult.cooldown(MessageKey.TPA_COOLDOWN,
                 Collections.singletonMap("seconds", String.valueOf(remaining)));
@@ -78,7 +81,10 @@ public class TpaServiceImpl implements ITpaService {
         }
 
         playerStateRepository.setTpaRequest(target.getUniqueId().toString(), gson.toJson(request), tpaTimeout);
-        playerStateRepository.setTpaCooldown(from.getUniqueId().toString(), tpaCooldown);
+        playerStateRepository.setTpaSent(from.getUniqueId().toString(), target.getUniqueId().toString(), tpaTimeout);
+        if (!from.hasPermission("apolo.tpa.bypass-cooldown")) {
+            playerStateRepository.setTpaCooldown(from.getUniqueId().toString(), tpaCooldown);
+        }
         return ServiceResult.success();
     }
 
@@ -91,6 +97,7 @@ public class TpaServiceImpl implements ITpaService {
 
         TpaRequestModel request = gson.fromJson(json, TpaRequestModel.class);
         playerStateRepository.deleteTpaRequest(acceptor.getUniqueId().toString());
+        playerStateRepository.deleteTpaSent(request.getFromUuid());
 
         Player from;
         try {
@@ -127,10 +134,32 @@ public class TpaServiceImpl implements ITpaService {
 
         TpaRequestModel request = gson.fromJson(json, TpaRequestModel.class);
         playerStateRepository.deleteTpaRequest(denier.getUniqueId().toString());
+        playerStateRepository.deleteTpaSent(request.getFromUuid());
 
         ApoloTpaDenyEvent event = new ApoloTpaDenyEvent(denier, request);
         denier.getServer().getPluginManager().callEvent(event);
         return ServiceResult.success();
+    }
+
+    @Override
+    public ServiceResult<String> cancel(Player sender) {
+        String senderUuid = sender.getUniqueId().toString();
+        String targetUuid = playerStateRepository.getTpaSent(senderUuid);
+        if (targetUuid == null) {
+            return ServiceResult.failure(MessageKey.TPA_NOTHING_TO_CANCEL);
+        }
+
+        String json = playerStateRepository.getTpaRequest(targetUuid);
+        if (json != null) {
+            TpaRequestModel request = gson.fromJson(json, TpaRequestModel.class);
+            if (senderUuid.equals(request.getFromUuid())) {
+                playerStateRepository.deleteTpaRequest(targetUuid);
+                playerStateRepository.deleteTpaSent(senderUuid);
+                return ServiceResult.success(request.getTargetName());
+            }
+        }
+        playerStateRepository.deleteTpaSent(senderUuid);
+        return ServiceResult.failure(MessageKey.TPA_NOTHING_TO_CANCEL);
     }
 
     @Override
