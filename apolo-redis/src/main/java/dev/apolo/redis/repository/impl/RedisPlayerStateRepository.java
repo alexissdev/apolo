@@ -70,6 +70,22 @@ public class RedisPlayerStateRepository implements IPlayerStateRepository {
         return redisManager.ttl(RedisKeys.repairCooldown(uuid));
     }
 
+    public void setTpaSent(String senderUuid, String targetUuid, int ttlSeconds) {
+        redisManager.setEx(RedisKeys.tpaSent(senderUuid), ttlSeconds, targetUuid);
+    }
+
+    public String getTpaSent(String senderUuid) {
+        return redisManager.get(RedisKeys.tpaSent(senderUuid));
+    }
+
+    public boolean hasTpaSent(String senderUuid) {
+        return redisManager.exists(RedisKeys.tpaSent(senderUuid));
+    }
+
+    public void deleteTpaSent(String senderUuid) {
+        redisManager.delete(RedisKeys.tpaSent(senderUuid));
+    }
+
     public void setTpaCooldown(String uuid, int ttlSeconds) {
         redisManager.setEx(RedisKeys.tpaCooldown(uuid), ttlSeconds, "1");
     }

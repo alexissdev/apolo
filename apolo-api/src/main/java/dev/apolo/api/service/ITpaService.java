@@ -11,6 +11,7 @@ public interface ITpaService {
     ServiceResult<Void> sendHereRequest(Player from, Player target);
     ServiceResult<Void> accept(Player acceptor);
     ServiceResult<Void> deny(Player denier);
+    ServiceResult<String> cancel(Player sender);
     boolean hasPendingRequest(Player player);
     Optional<TpaRequestModel> getPendingRequest(Player player);
 }

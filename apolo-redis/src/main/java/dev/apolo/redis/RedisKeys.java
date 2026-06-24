@@ -13,6 +13,10 @@ public final class RedisKeys {
         return PREFIX + ":tpa:cooldown:" + uuid;
     }
 
+    public static String tpaSent(String senderUuid) {
+        return PREFIX + ":tpa:sent:" + senderUuid;
+    }
+
     public static String warp(String name) {
         return PREFIX + ":warp:" + name.toLowerCase();
     }

@@ -46,6 +46,11 @@ public interface IPlayerStateRepository {
     boolean hasTpaCooldown(String uuid);
     long getTpaCooldownTtl(String uuid);
 
+    void setTpaSent(String senderUuid, String targetUuid, int ttlSeconds);
+    String getTpaSent(String senderUuid);
+    boolean hasTpaSent(String senderUuid);
+    void deleteTpaSent(String senderUuid);
+
     void setTpaRequest(String targetUuid, String json, int ttlSeconds);
     String getTpaRequest(String targetUuid);
     boolean hasTpaRequest(String targetUuid);

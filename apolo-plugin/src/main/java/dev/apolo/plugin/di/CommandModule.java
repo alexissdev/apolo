@@ -26,6 +26,7 @@ import dev.apolo.commands.impl.SetWarpCommand;
 import dev.apolo.commands.impl.TpAcceptCommand;
 import dev.apolo.commands.impl.TpDenyCommand;
 import dev.apolo.commands.impl.TpHereCommand;
+import dev.apolo.commands.impl.TpaCancelCommand;
 import dev.apolo.commands.impl.TpaCommand;
 import dev.apolo.api.service.IPrivateMessageService;
 import dev.apolo.commands.impl.MsgCommand;
@@ -81,6 +82,12 @@ public class CommandModule extends AbstractModule {
     @Singleton
     public TpDenyCommand provideTpDenyCommand(IMessageService msg, ITpaService tpa) {
         return new TpDenyCommand(msg, tpa);
+    }
+
+    @Provides
+    @Singleton
+    public TpaCancelCommand provideTpaCancelCommand(IMessageService msg, ITpaService tpa) {
+        return new TpaCancelCommand(msg, tpa);
     }
 
     @Provides

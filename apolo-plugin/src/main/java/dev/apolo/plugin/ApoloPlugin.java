@@ -28,6 +28,7 @@ import dev.apolo.commands.impl.SetWarpCommand;
 import dev.apolo.commands.impl.TpAcceptCommand;
 import dev.apolo.commands.impl.TpDenyCommand;
 import dev.apolo.commands.impl.TpHereCommand;
+import dev.apolo.commands.impl.TpaCancelCommand;
 import dev.apolo.commands.impl.TpaCommand;
 import dev.apolo.commands.impl.MsgCommand;
 import dev.apolo.commands.impl.ReplyCommand;
@@ -118,6 +119,7 @@ public class ApoloPlugin extends JavaPlugin {
         registry.register("tphere", injector.getInstance(TpHereCommand.class));
         registry.register("tpaccept", injector.getInstance(TpAcceptCommand.class));
         registry.register("tpadeny", injector.getInstance(TpDenyCommand.class));
+        registry.register("tpacancel", injector.getInstance(TpaCancelCommand.class));
         registry.register("warp", injector.getInstance(WarpCommand.class));
         registry.register("setwarp", injector.getInstance(SetWarpCommand.class));
         registry.register("delwarp", injector.getInstance(DelWarpCommand.class));
