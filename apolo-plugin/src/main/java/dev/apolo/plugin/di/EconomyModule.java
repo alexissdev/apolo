@@ -143,7 +143,7 @@ public class EconomyModule extends AbstractModule {
                                                    ITransactionRepository transactionRepository,
                                                    IPlayerStateRepository playerStateRepository) {
         return new TransferUseCase(userRepository, transactionRepository, playerStateRepository,
-            config.getMaxBalance(), config.getBalanceCacheTtl());
+            config.getMaxBalance(), config.getMinTransferAmount(), config.getBalanceCacheTtl());
     }
 
     @Provides

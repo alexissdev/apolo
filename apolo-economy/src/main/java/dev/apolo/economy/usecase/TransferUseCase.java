@@ -24,12 +24,17 @@ public class TransferUseCase implements UseCase<TransferUseCase.Input, Void> {
     private final ITransactionRepository transactionRepository;
     private final IPlayerStateRepository playerStateRepository;
     private final double maxBalance;
+    private final double minTransferAmount;
     private final int balanceCacheTtl;
 
     @Override
     public ServiceResult<Void> execute(Input input) {
         if (input.getAmount() <= 0) {
             return ServiceResult.failure(MessageKey.ECONOMY_INVALID_AMOUNT);
+        }
+        if (input.getAmount() < minTransferAmount) {
+            return ServiceResult.failure(MessageKey.ECONOMY_MIN_TRANSFER_AMOUNT,
+                Map.of("min", String.format("%.2f", minTransferAmount)));
         }
 
         try {

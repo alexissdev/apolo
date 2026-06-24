@@ -30,6 +30,9 @@ tpa:
   no-pending: "{prefix}&cNo tienes ninguna solicitud de TPA pendiente."
   teleporting: "{prefix}&7Teletransportando..."
   usage: "{prefix}&cUso: &e/tpa <jugador>"
+  nothing-to-cancel: "{prefix}&cNo tienes ninguna solicitud de TPA activa para cancelar."
+  cancelled-sender: "{prefix}&7Cancelaste tu solicitud de TPA a &c{player}&7."
+  cancelled-target: "{prefix}&e{player} &7canceló su solicitud de TPA."
 
 tphere:
   request-sent: "{prefix}&7Invitaste a &e{player} &7a teletransportarse a tu ubicación."
@@ -89,6 +92,7 @@ economy:
   transfer-received: "{prefix}&e{player} &7te transfirió &a${amount}&7."
   insufficient-funds: "{prefix}&cFondos insuficientes. Tienes &e${balance} &cy necesitas &e${amount}&c."
   invalid-amount: "{prefix}&cCantidad inválida. Debe ser un número positivo."
+  min-transfer-amount: "{prefix}&cEl monto mínimo de transferencia es &e${min}&c."
   account-not-found: "{prefix}&cNo se encontró la cuenta de &e{player}&c."
   account-created: "{prefix}&7Tu cuenta fue creada con saldo inicial de &a${initial}&7."
   top-header: "{prefix}&7&m---&r &bTop {limit} &7Jugadores por Saldo &7&m---"

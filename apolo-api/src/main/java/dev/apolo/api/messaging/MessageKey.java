@@ -40,6 +40,9 @@ public enum MessageKey {
     TPA_NO_PENDING("tpa.no-pending"),
     TPA_TELEPORTING("tpa.teleporting"),
     TPA_USAGE("tpa.usage"),
+    TPA_NOTHING_TO_CANCEL("tpa.nothing-to-cancel"),
+    TPA_CANCELLED_SENDER("tpa.cancelled-sender"),
+    TPA_CANCELLED_TARGET("tpa.cancelled-target"),
 
     // TPHere
     TPHERE_REQUEST_SENT("tphere.request-sent"),
@@ -98,6 +101,7 @@ public enum MessageKey {
     ECONOMY_TRANSFER_RECEIVED("economy.transfer-received"),
     ECONOMY_INSUFFICIENT_FUNDS("economy.insufficient-funds"),
     ECONOMY_INVALID_AMOUNT("economy.invalid-amount"),
+    ECONOMY_MIN_TRANSFER_AMOUNT("economy.min-transfer-amount"),
     ECONOMY_ACCOUNT_NOT_FOUND("economy.account-not-found"),
     ECONOMY_ACCOUNT_CREATED("economy.account-created"),
     ECONOMY_TOP_HEADER("economy.top-header"),
