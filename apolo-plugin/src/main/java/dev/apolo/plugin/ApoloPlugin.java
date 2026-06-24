@@ -69,6 +69,7 @@ public class ApoloPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        printBanner();
 
         ConfigLoader configLoader = new ConfigLoader(this);
         config = configLoader.load();
@@ -83,7 +84,21 @@ public class ApoloPlugin extends JavaPlugin {
         setupPrivateMessaging();
         setupCommandSpy();
 
-        log.info("Apolo plugin enabled successfully!");
+        log.info("Plugin enabled successfully.");
+    }
+
+    private void printBanner() {
+        String v = getDescription().getVersion();
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§3    ___  ____   ___  _     ___  ");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§3   / _ \\|  _ \\ / _ \\| |   / _ \\ ");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§3  / /_\\ \\ |_) | | | | |  | | | |");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§3 /  ___  \\  __/| |_| | |__| |_| |");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§3/_/   \\_\\_|    \\___/|_____\\___/ ");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§8  ─────────────────────────────");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§7  Version §b" + v + "  §8│  §7by §bTuNombre");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("§8  ─────────────────────────────");
+        org.bukkit.Bukkit.getConsoleSender().sendMessage("");
     }
 
     private void setupAPI() {
