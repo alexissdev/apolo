@@ -27,7 +27,10 @@ public class TpaListener implements Listener {
         if (pending.isPresent()) {
             TpaRequestModel request = pending.get();
             tpaService.deny(player);
-            Player sender = player.getServer().getPlayer(UUID.fromString(request.getFromUuid()));
+            Player sender = null;
+            try {
+                sender = player.getServer().getPlayer(UUID.fromString(request.getFromUuid()));
+            } catch (IllegalArgumentException ignored) {}
             if (sender != null) {
                 messageService.sendMessage(sender, MessageKey.TPA_EXPIRED_SENDER,
                     Collections.singletonMap("player", player.getName()));

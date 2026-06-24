@@ -34,10 +34,11 @@ public class WarpCommand extends BaseCommand {
 
         Player player = context.getPlayer();
         String warpName = context.getArgs()[0];
-        messageService.sendMessage(player, MessageKey.WARP_TELEPORTING,
-            Collections.singletonMap("warp", warpName));
         ServiceResult<Void> result = warpService.teleportToWarp(player, warpName);
-        if (!result.isSuccess()) {
+        if (result.isSuccess()) {
+            messageService.sendMessage(player, MessageKey.WARP_TELEPORTING,
+                Collections.singletonMap("warp", warpName));
+        } else {
             result.getMessageKey().ifPresent(key ->
                 messageService.sendMessage(player, key, result.getPlaceholders()));
         }

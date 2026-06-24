@@ -38,7 +38,10 @@ public class TpDenyCommand extends BaseCommand {
         if (result.isSuccess()) {
             messageService.sendMessage(denier, MessageKey.TPA_DENIED_TARGET,
                 Collections.singletonMap("player", request.getFromName()));
-            Player from = denier.getServer().getPlayer(UUID.fromString(request.getFromUuid()));
+            Player from = null;
+            try {
+                from = denier.getServer().getPlayer(UUID.fromString(request.getFromUuid()));
+            } catch (IllegalArgumentException ignored) {}
             if (from != null) {
                 messageService.sendMessage(from, MessageKey.TPA_DENIED_SENDER,
                     Collections.singletonMap("player", denier.getName()));

@@ -21,7 +21,7 @@ public class ApoloModule extends AbstractModule {
         install(new MessagingModule(plugin));
         install(new RepositoryModule());
         install(new EconomyModule(plugin, config));
-        install(new CommandModule((JavaPlugin) plugin));
+        install(new CommandModule((JavaPlugin) plugin, config));
         install(new ListenerModule(plugin, config));
     }
 }

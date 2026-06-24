@@ -36,11 +36,15 @@ public class TpAcceptCommand extends BaseCommand {
         ServiceResult<Void> result = tpaService.accept(acceptor);
 
         if (result.isSuccess()) {
+            Player from = null;
+            try {
+                from = acceptor.getServer().getPlayer(UUID.fromString(request.getFromUuid()));
+            } catch (IllegalArgumentException ignored) {}
+
             boolean isHere = request.isHereRequest();
             if (isHere) {
                 messageService.sendMessage(acceptor, MessageKey.TPHERE_ACCEPTED_TARGET,
                     Collections.singletonMap("player", request.getFromName()));
-                Player from = acceptor.getServer().getPlayer(UUID.fromString(request.getFromUuid()));
                 if (from != null) {
                     messageService.sendMessage(from, MessageKey.TPHERE_ACCEPTED_SENDER,
                         Collections.singletonMap("player", acceptor.getName()));
@@ -48,7 +52,6 @@ public class TpAcceptCommand extends BaseCommand {
             } else {
                 messageService.sendMessage(acceptor, MessageKey.TPA_ACCEPTED_TARGET,
                     Collections.singletonMap("player", request.getFromName()));
-                Player from = acceptor.getServer().getPlayer(UUID.fromString(request.getFromUuid()));
                 if (from != null) {
                     messageService.sendMessage(from, MessageKey.TPA_ACCEPTED_SENDER,
                         Collections.singletonMap("player", acceptor.getName()));

@@ -13,11 +13,12 @@ import java.util.Map;
 
 public class WarpsCommand extends BaseCommand {
     private final IWarpService warpService;
-    private static final int PER_PAGE = 6;
+    private final int warpsPerPage;
 
-    public WarpsCommand(IMessageService messageService, IWarpService warpService) {
+    public WarpsCommand(IMessageService messageService, IWarpService warpService, int warpsPerPage) {
         super(messageService);
         this.warpService = warpService;
+        this.warpsPerPage = warpsPerPage;
     }
 
     @Override
@@ -36,10 +37,10 @@ public class WarpsCommand extends BaseCommand {
             try { page = Integer.parseInt(context.getArgs()[0]); } catch (NumberFormatException ignored) {}
         }
 
-        int totalPages = (int) Math.ceil((double) warps.size() / PER_PAGE);
+        int totalPages = (int) Math.ceil((double) warps.size() / warpsPerPage);
         page = Math.max(1, Math.min(page, totalPages));
-        int start = (page - 1) * PER_PAGE;
-        int end = Math.min(start + PER_PAGE, warps.size());
+        int start = (page - 1) * warpsPerPage;
+        int end = Math.min(start + warpsPerPage, warps.size());
 
         messageService.sendMessage(context.getSender(), MessageKey.WARP_LIST_HEADER,
             Map.of("page", String.valueOf(page), "total_pages", String.valueOf(totalPages)));

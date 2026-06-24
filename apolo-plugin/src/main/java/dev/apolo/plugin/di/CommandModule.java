@@ -35,13 +35,16 @@ import dev.apolo.commands.impl.SocialSpyCommand;
 import dev.apolo.core.repository.interfaces.IPlayerStateRepository;
 import dev.apolo.commands.impl.WarpCommand;
 import dev.apolo.commands.impl.WarpsCommand;
+import dev.apolo.plugin.config.ApoloConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandModule extends AbstractModule {
     private final JavaPlugin plugin;
+    private final ApoloConfig config;
 
-    public CommandModule(JavaPlugin plugin) {
+    public CommandModule(JavaPlugin plugin, ApoloConfig config) {
         this.plugin = plugin;
+        this.config = config;
     }
 
     @Provides
@@ -101,7 +104,7 @@ public class CommandModule extends AbstractModule {
     @Provides
     @Singleton
     public WarpsCommand provideWarpsCommand(IMessageService msg, IWarpService warp) {
-        return new WarpsCommand(msg, warp);
+        return new WarpsCommand(msg, warp, config.getWarpsPerPage());
     }
 
     @Provides
