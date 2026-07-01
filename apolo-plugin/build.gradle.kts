@@ -15,8 +15,8 @@ bukkit {
     main = "dev.apolo.plugin.ApoloPlugin"
     version = "1.0.0"
     apiVersion = "1.13"
-    authors = listOf("TuNombre")
-    softDepend = listOf("Vault")
+    authors = listOf("AlexisDev")
+    depend = listOf("Vault")
     commands {
         register("gamemode") {
             aliases = listOf("gm")
